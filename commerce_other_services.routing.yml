@@ -1,0 +1,10 @@
+other_services_dashboard_form:
+  path: '/dashboard/{user_id}/{user}/{mail}/{service_order}'
+  defaults:
+    user: null
+    mail: null
+    _title: 'Other Services Dashboard Form'
+    _form: \Drupal\commerce_other_services\Form\OtherServicesDashboardForm
+  requirements:
+    _permission: 'access content'
+

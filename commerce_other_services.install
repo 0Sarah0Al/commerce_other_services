@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the commerce_other_services module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup commerce_other_services
+ */
+function commerce_other_services_schema() {
+  $schema['commerce_other_services'] = [
+    'description' => 'Stores commerce other services data',
+    'fields' => [
+      'osid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Creator user's {users}.uid",
+      ],
+      'user_id' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The user who requested other service',
+      ],
+      'user_name' => [
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'The user name of the person requested other service',
+      ],
+      'user_email' => [
+        'type' => 'varchar',
+        'length' => 254,
+        'not null' => FALSE,
+        'description' => 'The email of the person requested other service',
+      ],
+      'service_order' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The sid of webform submission',
+        ],
+      'service_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'The requested service name',
+        ],
+      'amount' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Price of the requested service',
+        ],
+      'service_description' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'The requested service description',
+      ],
+      'processed' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+        'description' => 'Whether the requested service is processed or not',
+      ],
+    ],
+    'primary key' => ['osid'],
+    'indexes' => [
+      'user_id' => ['user_id'],
+      'service_order' => ['service_order'],
+    ],
+    'foreign keys' => [
+      'user_id' => ['users' => 'uid'],
+      'service_order' => ['webform_submission' => 'sid'],
+      ],
+  ];
+
+  return $schema;
+}
